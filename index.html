@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=1920, height=1080, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Franklinstein release Phase B</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Fontdiner+Swanky&display=swap');
+
+        :root {
+            --app-url: '#';
+            --viewport-width: 1920;
+            --viewport-height: 1080;
+            --sun-width: 30vw;
+            --land-height: 40%;
+            --unicorn-height: calc(240 * 100vh / var(--viewport-height));
+            --unicorn-width: calc(270 * 100vw / var(--viewport-width));
+            --cloud-fly-position: calc(var(--land-height) + var(--unicorn-height) / 2 + 3vh);
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            background-color: lightgoldenrodyellow;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-family: 'Creepster', cursive;
+            margin-top: 0;
+        }
+
+        p {
+            margin: .5em 0;
+        }
+
+        .d-none {
+            /*display: none!important;*/
+            visibility: hidden!important;
+        }
+
+        .container {
+      /*      width: 1920px;
+            height: 1080px;*/
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            max-width: 100vw;
+
+            position: relative;
+            background: linear-gradient(lightblue, white);
+        }
+
+        .compass {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .compass span {
+            font-size: 45px;
+            margin-left: 3px;
+        }
+
+        .text-container {
+            position: relative;
+            font-family: 'Fontdiner Swanky', cursive;
+            font-size: 22px;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            height: 40%;
+        }
+
+        .text-container > * {
+            width: 40%;
+            text-align: center;
+            max-height: 150px;
+        }
+
+        .action > p {
+            opacity: 0;
+            margin: 0;
+            max-height: 0;
+            transform: scale(0);
+            transition: all 1s linear;
+        }
+
+        .magic-container {
+            font-size: 0;
+        }
+
+        .action .magic-container {
+            transform: translateY(-20%);
+        }
+
+        .action .magic {
+            font-size: 156px;
+            line-height: 1;
+            background: url("rainbow.png") no-repeat left 95%;
+            background-size: 130%;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            transition: font-size 2s;
+        }
+
+        .action .magic-applying {
+            font-size: 32px;
+            text-align: right;
+            margin-right: 4em;
+            position: relative;
+        }
+
+        .action .magic-applying::after {
+            content: '.';
+            font-size: 36px;
+            position: absolute;
+            right: -8px;
+            bottom: 0;
+            animation: pulse 2s linear infinite;
+        }
+
+        @keyframes pulse {
+            100% {
+                text-shadow: 10px 0, 20px 0;
+
+            }
+        }
+
+        .animation-container {
+            position: static;
+            bottom: 0;
+            height: 60%;
+        }
+
+        .img-container {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            background-size: 60%;
+        }
+
+
+        .sun-raised {
+            position: absolute;
+            top: 3%;
+            left: 20%;
+            border-radius: 50%;
+            width: calc(var(--sun-width) / 3);
+            height: calc(var(--sun-width) / 3);
+            background: radial-gradient(darkorange 30%, transparent 50%, transparent 90%);
+
+            -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 1) 30%, transparent 70%);
+            --mask-image: radial-gradient(rgba(0, 0, 0, 1) 30%, transparent 65%);
+        }
+
+        .action.sun-raised {
+            -webkit-mask-image: none;
+            --mask-image: none;
+
+            width: calc(var(--sun-width) / 2);
+            height: calc(var(--sun-width) / 2);
+
+            top: 0;
+            left: 18%;
+            background: darkorange;
+
+            transition: width 1s linear, height 1s linear, visibility 1.5s linear;
+        }
+
+        .sun-raised::before,
+        .sun-raised::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .action.sun-raised::before,
+        .action.sun-raised::after {
+            content: none;
+        }
+
+        .sun-raised::before {
+            background: radial-gradient(darkorange 30%, transparent 50%, transparent 90%), repeating-conic-gradient(from 0deg, orange 0deg 10deg, transparent 20deg 40deg);
+            animation: sun-beams-scale 10s linear infinite forwards;
+        }
+
+        @keyframes sun-beams-scale {
+            0% {
+                transform: scale(1) rotate(0);
+            }
+            20% {
+                transform: scale(.7) rotate(80deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(160deg);
+            }
+            80% {
+                transform: scale(.8) rotate(240deg);
+            }
+            100% {
+                transform: scale(1.1) rotate(360deg);
+            }
+        }
+
+        @keyframes sun-beams-rotate {
+            0% {
+                transform: rotate(0);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .sun-raised-top-half,
+        .sun-raised-bottom-half {
+            position: absolute;
+            left: 18%;
+            background: darkorange;
+
+            width: calc(var(--sun-width) / 2);
+            height: calc(var(--sun-width) / 4);
+            z-index: 1;
+        }
+
+        .sun-raised-top-half {
+            top: 0;
+            border-radius: calc(var(--sun-width) / 2) calc(var(--sun-width) / 2) 0 0;
+            transition: all 1s;
+        }
+
+        .action.sun-raised-top-half {
+            position: absolute;
+            top: unset;
+            bottom: calc(var(--land-height) - 18px);
+            left: .5em;
+            width: var(--sun-width);
+            height: calc(var(--sun-width) / 2);
+            border-radius: calc(var(--sun-width) / 2) calc(var(--sun-width) / 2) 0 0;
+            background-color: #fd5e53;
+        }
+
+        .sun-raised-bottom-half {
+            top: calc(var(--sun-width) / 4);
+            border-radius: 0 0 calc(var(--sun-width) / 2) calc(var(--sun-width) / 2);
+            transition: all 1.5s linear;
+        }
+
+        .action.sun-raised-bottom-half {
+            top: 70%;
+            transform: rotate(1.5turn);
+        }
+
+        .sun-landed {
+            display: none;
+
+            position: absolute;
+            bottom: calc(var(--land-height) - 18px);
+            left: .5em;
+            width: var(--sun-width);
+            height: calc(var(--sun-width) / 2);
+            border-radius: calc(var(--sun-width) / 2) calc(var(--sun-width) / 2) 0 0;
+            background-color: #fd5e53;
+            z-index: 1;
+        }
+
+        .land {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: var(--land-height);
+            width: 100%;
+            mask-border: url("mask.svg") 18 / 26px / 0 20px 20px 20px round stretch;
+            -webkit-mask-box-image: url("mask.svg") 18 / 26px / 0 20px 20px 20px round stretch;
+            background-color: lawngreen;
+            z-index: 2;
+        }
+
+        .unicorn {
+            position: absolute;
+            height: var(--unicorn-height);
+            width: var(--unicorn-width);
+            bottom: calc(var(--land-height) - var(--unicorn-height) / 2);
+            left: calc(50% - var(--unicorn-width) / 2);
+            z-index: 5;
+        }
+
+        .unicorn img {
+            width: 100%;
+        }
+
+        /*.animation-container:hover .unicorn {*/
+        /*    animation: running-away-to-the-sunset 3s 1 normal forwards,*/
+        /*    100ms infinite alternate skok;*/
+        /*}*/
+
+
+        @keyframes running-away-to-the-sunset {
+            0% {
+                visibility: visible;
+                bottom: 0;
+                width: 5em;
+                height: 5em;
+            }
+
+            80% {
+                z-index: 5;
+            }
+
+            100% {
+                visibility: hidden;
+                bottom: 60%;
+                left: calc(var(--sun-width) - 2em);
+                width: .5em;
+                height: .5em;
+                z-index: 0;
+            }
+        }
+
+        @keyframes skok {
+            from {
+                transform: rotate(15deg);
+            }
+
+            to {
+                transform: rotate(-15deg);
+            }
+        }
+
+        .rainbow {
+            --rainbow-height: 150;
+
+            position: absolute;
+            overflow: hidden;
+
+            width: calc(var(--rainbow-height) * 100vw / var(--viewport-width));
+            height: calc(var(--rainbow-height) * 100vh / var(--viewport-height));
+        }
+
+        .action.rainbow {
+            transform: skewX(-5deg) scale(5, .35);
+            border-radius: 50%;
+            z-index: -1;
+
+            transition: all .5s;
+        }
+
+        /** position inside unicorn container */
+        .rainbow-first {
+            top: calc(var(--unicorn-height) / 2 + 25px);
+            right: calc(var(--unicorn-width) - 70px);
+        }
+
+        .action.rainbow-first {
+            top: unset;
+            right: 50%;
+            bottom: -32%;
+        }
+
+        .rainbow-first img {
+            animation: rainbow 1.5s ease-in forwards infinite;
+        }
+
+        .rainbow-second {
+            top: calc(var(--unicorn-height) * 0.75 - 10px);
+            left: 50%;
+            transform: rotateY(180deg);
+        }
+
+        .action.rainbow-second {
+            display: none;
+        }
+
+        .rainbow-second img {
+            animation: 1.5s rainbow .5s ease-in forwards infinite;
+        }
+
+
+        @keyframes rainbow {
+            0% {
+                transform: translate(70px, calc(var(--unicorn-height) * -1)) rotateZ(45deg);
+            }
+            80% {
+                transform: rotateZ(-10deg);
+            }
+            100% {
+                transform: translate(-30px, var(--unicorn-height)) rotateZ(-30deg);
+            }
+
+        }
+
+        .cloud-container {
+            position: absolute;
+            bottom: var(--cloud-fly-position);
+            left: 3%;
+            width: calc(200 * 100vw / var(--viewport-width));
+            z-index: 5;
+            animation: cloud-fly 15s alternate infinite;
+        }
+
+        @keyframes cloud-fly {
+            10% {
+                bottom: calc(var(--cloud-fly-position));
+            }
+            30% {
+                bottom: calc(var(--cloud-fly-position) - 80px);
+            }
+            40% {
+                bottom: calc(var(--cloud-fly-position));
+            }
+            100% {
+                left: 50%;
+            }
+        }
+
+        .cloud {
+            width: 100%;
+        }
+
+        .action .cloud {
+            display: none;
+        }
+
+        .paper {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            z-index: 5;
+            width: calc(90 * 100vw / var(--viewport-width));
+        }
+
+        .action .paper {
+            transform: translate(16px, 200px) rotate(2.4turn);
+            transition: transform 1s linear;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="compass">
+        <img src="mask.svg" alt=""><span>N</span>
+    </div>
+    <div data-text-container class="text-container">
+        <h1>Franklinstein</h1>
+        <p>
+            This thing is dead and even our best necromancers can't resurrect it.
+        </p>
+        <p>
+            BU<span style="text-shadow: .7em 0 3px, 1.3em 0 5px;">T</span>
+        </p>
+        <p>
+            If you believe in MAGIC <a data-action href="#">click here</a>
+        </p>
+        <div class="magic-container">
+            <div class="magic">MAGIC</div>
+            <div class="magic-applying">applying</div>
+        </div>
+    </div>
+    <div data-animation-container class="animation-container">
+        <div class="img-container">
+            <div data-sun-raised class="sun-raised"></div>
+            <div data-sun-top-half class="sun-raised-top-half d-none"></div>
+            <div data-sun-bottom-half class="sun-raised-bottom-half d-none"></div>
+
+            <div data-unicorn class="unicorn">
+                <img src="unicorn.png" alt="">
+
+                <div class="rainbow rainbow-first">
+                    <img src="rainbow.png" alt="">
+                </div>
+
+                <div class="rainbow rainbow-second">
+                    <img src="rainbow.png" alt="">
+                </div>
+            </div>
+
+            <div data-cloud-container class="cloud-container">
+                <img class="cloud" src="cloud.png" alt="">
+                <img class="paper" src="paper.png" alt="">
+            </div>
+
+            <div class="land"></div>
+        </div>
+    </div>
+    <audio data-sound-gallop src="horse-gallop.wav"></audio>
+    <audio data-sound-igogo src="horse-neigh.wav"></audio>
+    <audio data-sound-magic src="magic.mp3"></audio>
+    <audio data-sound-knife src="knife.mp3"></audio>
+    <script>
+        const textContainer = document.querySelector('[data-text-container]')
+        const animationContainer = document.querySelector('[data-animation-container]')
+        const sounds = document.getElementsByTagName('audio')
+
+        window.addEventListener('click', e => {
+            if (undefined === e.target.dataset.action) return;
+
+            // change text container
+            textContainer.classList.add('action');
+            document.querySelector('[data-sound-magic]').play();
+
+            // stop the cloud and add the paper animation
+            const cloudContainer = document.querySelector('[data-cloud-container]');
+            cloudContainer.style.animationPlayState = 'paused';
+            cloudContainer.classList.add('action');
+
+            // start main scene action
+            animationContainer.classList.add('action');
+
+            // unicorn stops shitting
+            document.getAnimations().forEach(a => {
+                if ('rainbow' !== a.animationName) return;
+                a.effect.updateTiming({iterations: 1});
+                a.finish();
+                a.cancel();
+            })
+            document.querySelectorAll('.rainbow').forEach(el => el.classList.add('action'));
+
+            // split the sun
+            const sun = document.querySelector('[data-sun-raised]');
+            const sunTopHalf = document.querySelector('[data-sun-top-half]');
+            const sunBottomHalf = document.querySelector('[data-sun-bottom-half]');
+
+            sun.classList.add('action');
+            sun.ontransitionend = () => {
+                sun.classList.add('d-none');
+
+                setTimeout(() => {
+                    document.querySelector('[data-sound-knife]').play();
+                    sunTopHalf.classList.replace('d-none', 'action');
+                    sunBottomHalf.classList.replace('d-none', 'action');
+                }, 1500);
+            }
+
+            // unicorn igogo and run
+
+
+        }, false);
+
+        const animationHandler = (a, suffix) => window[a.animationName.replace(/-\w/, m => m.replace('-', '').toUpperCase()).concat(suffix)]?.();
+        animationContainer.addEventListener("animationstart", a => animationHandler(a, 'AnimationStartHandler'), false);
+        animationContainer.addEventListener("animationend", a => animationHandler(a, 'AnimationEndHandler'), false);
+
+        const rainbowAnimationEndHandler = () => {
+
+        }
+
+        const runningAwayToTheSunsetAnimationStartHandler = () => {
+            for (let i = 0; i < sounds.length; i++) {
+                sounds[i].play()
+            }
+        }
+
+        const runningAwayToTheSunsetAnimationEndHandler = () => {
+
+            console.log('end of animation : ' + a.animationName)
+            for (let i = 0; i < sounds.length; i++) {
+                sounds[i].pause()
+            }
+
+
+            // function soundHandler(callback) {
+            //     for (let i = 0; i < sounds.length; i++) {
+            //         callback.apply(sounds[i])
+            //         // sounds[i].callback()
+            //     }
+            // }
+        }
+
+    </script>
+</div>
+</body>
+</html>
