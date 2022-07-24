@@ -25,27 +25,8 @@ const pause = curry('pause');
 
 registerAnimationListener('igogoStart', () => play('igogo'));
 
-registerAnimationListener('runningAwayToTheSunsetStart', () => {
-    for (let i = 0; i < sounds.length; i++) {
-        sounds[i].play()
-    }
-});
-
-registerAnimationListener('runningAwayToTheSunsetEnd', () => {
-
-    console.log('end of animation : ' + a.animationName)
-    for (let i = 0; i < sounds.length; i++) {
-        sounds[i].pause()
-    }
-
-
-    // function soundHandler(callback) {
-    //     for (let i = 0; i < sounds.length; i++) {
-    //         callback.apply(sounds[i])
-    //         // sounds[i].callback()
-    //     }
-    // }
-});
+registerAnimationListener('runningAwayToTheSunsetStart', () => play('skok'));
+registerAnimationListener('runningAwayToTheSunsetEnd', () => pause('skok'));
 
 document.addEventListener('click', e => {
     if (undefined === e.target.dataset.action) return;
@@ -88,8 +69,8 @@ document.addEventListener('click', e => {
     }
 
     // unicorn igogo and run
-
-
+    const unicornContainer = document.querySelector('[data-unicorn-container]');
+    unicornContainer.classList.add('action');
 
 }, false);
 

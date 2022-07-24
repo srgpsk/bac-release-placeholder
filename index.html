@@ -302,14 +302,13 @@
         }
 
         .action.unicorn-container .unicorn {
-            animation: igogo .5s steps(3, jump-none) forwards;
+            animation: igogo .5s steps(4, jump-none) forwards,
+            100ms skok .7s infinite alternate;
         }
 
-        /*.animation-container:hover .unicorn {*/
-        /*    animation: running-away-to-the-sunset 3s 1 normal forwards,*/
-        /*    100ms infinite alternate skok;*/
-        /*}*/
-
+        .action.unicorn-container {
+            animation: 3s running-away-to-the-sunset .7s 1 normal forwards;
+        }
 
         @keyframes igogo {
             0% {
@@ -323,10 +322,8 @@
 
         @keyframes running-away-to-the-sunset {
             0% {
+                transform: rotate(-60deg);
                 visibility: visible;
-                bottom: 0;
-                width: 5em;
-                height: 5em;
             }
 
             80% {
@@ -335,8 +332,8 @@
 
             100% {
                 visibility: hidden;
-                bottom: 60%;
-                left: calc(var(--sun-width) - 2em);
+                bottom: calc(var(--land-height));
+                left: calc(var(--sun-width) - var(--unicorn-width) / 3);
                 width: .5em;
                 height: .5em;
                 z-index: 0;
@@ -514,7 +511,7 @@
             <div class="land"></div>
         </div>
     </div>
-    <audio data-sound-gallop src="sound/horse-gallop.ogg"></audio>
+    <audio data-sound-skok src="sound/horse-gallop.ogg"></audio>
     <audio data-sound-igogo src="sound/horse-neigh.ogg"></audio>
     <audio data-sound-magic src="sound/magic.ogg"></audio>
     <audio data-sound-knife src="sound/knife.ogg"></audio>
