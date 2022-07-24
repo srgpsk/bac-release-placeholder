@@ -42,12 +42,12 @@
 
         .d-none {
             /*display: none!important;*/
-            visibility: hidden!important;
+            visibility: hidden !important;
         }
 
         .container {
-      /*      width: 1920px;
-            height: 1080px;*/
+            /*      width: 1920px;
+                  height: 1080px;*/
             overflow: hidden;
             width: 100vw;
             height: 100vh;
@@ -288,7 +288,7 @@
             z-index: 2;
         }
 
-        .unicorn {
+        .unicorn-container {
             position: absolute;
             height: var(--unicorn-height);
             width: var(--unicorn-width);
@@ -297,8 +297,12 @@
             z-index: 5;
         }
 
-        .unicorn img {
+        .unicorn-container .unicorn {
             width: 100%;
+        }
+
+        .action.unicorn-container .unicorn {
+            animation: igogo .5s steps(3, jump-none) forwards;
         }
 
         /*.animation-container:hover .unicorn {*/
@@ -306,6 +310,16 @@
         /*    100ms infinite alternate skok;*/
         /*}*/
 
+
+        @keyframes igogo {
+            0% {
+                transform: rotate(15deg);
+            }
+
+            100% {
+                transform: rotate(30deg);
+            }
+        }
 
         @keyframes running-away-to-the-sunset {
             0% {
@@ -347,6 +361,10 @@
 
             width: calc(var(--rainbow-height) * 100vw / var(--viewport-width));
             height: calc(var(--rainbow-height) * 100vh / var(--viewport-height));
+        }
+
+        .rainbow img {
+            width: 100%;
         }
 
         .action.rainbow {
@@ -476,8 +494,8 @@
             <div data-sun-top-half class="sun-raised-top-half d-none"></div>
             <div data-sun-bottom-half class="sun-raised-bottom-half d-none"></div>
 
-            <div data-unicorn class="unicorn">
-                <img src="unicorn.png" alt="">
+            <div data-unicorn-container class="unicorn-container">
+                <img class="unicorn" src="unicorn.png" alt="">
 
                 <div class="rainbow rainbow-first">
                     <img src="rainbow.png" alt="">
