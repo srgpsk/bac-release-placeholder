@@ -1,8 +1,43 @@
-const textContainer = document.querySelector('[data-text-container]')
-const animationContainer = document.querySelector('[data-animation-container]')
-const sounds = document.getElementsByTagName('audio')
+const textContainer = document.querySelector('[data-text-container]');
+const animationContainer = document.querySelector('[data-animation-container]');
 
-window.addEventListener('click', e => {
+const animationTypes = ['animationstart', 'animationend', 'animationcancel', 'animationiteration'];
+const animationHandler = a => {
+    const suffix = a.type.substring(9).replace(/^\w/, ch => ch.toUpperCase()); // Start, End etc.
+    const listenerName = a.animationName
+        .replaceAll(/-\w/g, m => m.replace('-', '').toUpperCase()) // CSS animation name to camel Case
+        .concat(suffix);
+
+    animationListeners[listenerName]?.();
+}
+animationTypes.forEach(t => animationContainer.addEventListener(t, animationHandler, false));
+
+const animationListeners = {};
+const registerAnimationListener = (listenerName, callback) => animationListeners[listenerName] = callback;
+
+registerAnimationListener('igogoStart', () => document.querySelector('[data-sound-igogo]').play());
+registerAnimationListener('runningAwayToTheSunsetStart', () => {
+    for (let i = 0; i < sounds.length; i++) {
+        sounds[i].play()
+    }
+});
+registerAnimationListener('runningAwayToTheSunsetEnd', () => {
+
+    console.log('end of animation : ' + a.animationName)
+    for (let i = 0; i < sounds.length; i++) {
+        sounds[i].pause()
+    }
+
+
+    // function soundHandler(callback) {
+    //     for (let i = 0; i < sounds.length; i++) {
+    //         callback.apply(sounds[i])
+    //         // sounds[i].callback()
+    //     }
+    // }
+});
+
+document.addEventListener('click', e => {
     if (undefined === e.target.dataset.action) return;
 
     // change text container
@@ -45,34 +80,7 @@ window.addEventListener('click', e => {
     // unicorn igogo and run
 
 
+
 }, false);
 
-const animationHandler = (a, suffix) => window[a.animationName.replace(/-\w/, m => m.replace('-', '').toUpperCase()).concat(suffix)]?.();
-animationContainer.addEventListener("animationstart", a => animationHandler(a, 'AnimationStartHandler'), false);
-animationContainer.addEventListener("animationend", a => animationHandler(a, 'AnimationEndHandler'), false);
 
-const rainbowAnimationEndHandler = () => {
-
-}
-
-const runningAwayToTheSunsetAnimationStartHandler = () => {
-    for (let i = 0; i < sounds.length; i++) {
-        sounds[i].play()
-    }
-}
-
-const runningAwayToTheSunsetAnimationEndHandler = () => {
-
-    console.log('end of animation : ' + a.animationName)
-    for (let i = 0; i < sounds.length; i++) {
-        sounds[i].pause()
-    }
-
-
-    // function soundHandler(callback) {
-    //     for (let i = 0; i < sounds.length; i++) {
-    //         callback.apply(sounds[i])
-    //         // sounds[i].callback()
-    //     }
-    // }
-}
