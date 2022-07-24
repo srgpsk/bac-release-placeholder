@@ -8,19 +8,29 @@ const animationHandler = a => {
         .replaceAll(/-\w/g, m => m.replace('-', '').toUpperCase()) // CSS animation name to camel Case
         .concat(suffix);
 
-    animationListeners[listenerName]?.();
+    animationListeners[listenerName]?.call(window, a);
 }
 animationTypes.forEach(t => animationContainer.addEventListener(t, animationHandler, false));
 
 const animationListeners = {};
 const registerAnimationListener = (listenerName, callback) => animationListeners[listenerName] = callback;
+const soundHandler = (soundName, action) => {
+    const mediaElement = document.querySelector(`[data-sound-${soundName}]`);
+    (new Audio())[action].call(mediaElement);
+}
+// curry it
+const curry = action => soundName => soundHandler(soundName, action);
+const play = curry('play');
+const pause = curry('pause');
 
-registerAnimationListener('igogoStart', () => document.querySelector('[data-sound-igogo]').play());
+registerAnimationListener('igogoStart', () => play('igogo'));
+
 registerAnimationListener('runningAwayToTheSunsetStart', () => {
     for (let i = 0; i < sounds.length; i++) {
         sounds[i].play()
     }
 });
+
 registerAnimationListener('runningAwayToTheSunsetEnd', () => {
 
     console.log('end of animation : ' + a.animationName)
