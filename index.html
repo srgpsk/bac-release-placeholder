@@ -15,6 +15,7 @@
             --viewport-height: 1080;
             --sun-width: 30vw;
             --land-height: 40%;
+            --grass-height: 18px;
             --unicorn-height: calc(240 * 100vh / var(--viewport-height));
             --unicorn-width: calc(270 * 100vw / var(--viewport-width));
             --cloud-fly-position: calc(var(--land-height) + var(--unicorn-height) / 2 + 3vh);
@@ -238,18 +239,41 @@
         .sun-raised-top-half {
             top: 0;
             border-radius: calc(var(--sun-width) / 2) calc(var(--sun-width) / 2) 0 0;
-            transition: all 1s;
         }
 
         .action.sun-raised-top-half {
             position: absolute;
-            top: unset;
-            bottom: calc(var(--land-height) - 18px);
-            left: .5em;
             width: var(--sun-width);
-            height: calc(var(--sun-width) / 2);
+            --sun-landed-height: calc(var(--sun-width) / 2);
+            height: var(--sun-landed-height);
             border-radius: calc(var(--sun-width) / 2) calc(var(--sun-width) / 2) 0 0;
             background-color: #fd5e53;
+            animation: sun-landing 1s forwards ease-in, .1s ease-out .7s 2 normal sun-landed;
+        }
+
+        @keyframes sun-landing {
+            0% {
+                top: 0;
+                left: 18%;
+            }
+
+            60% {
+                left: 20px;
+            }
+
+            100% {
+                top: calc(100% - var(--land-height) - var(--sun-landed-height) + var(--grass-height));
+                left: 5px;
+            }
+        }
+
+        @keyframes sun-landed {
+            0% {
+                transform: rotate(-15deg);
+            }
+            100% {
+                transform: rotate(15deg);
+            }
         }
 
         .sun-raised-bottom-half {
@@ -259,21 +283,8 @@
         }
 
         .action.sun-raised-bottom-half {
-            top: 70%;
+            top: calc(100% - var(--land-height) + var(--grass-height));
             transform: rotate(1.5turn);
-        }
-
-        .sun-landed {
-            display: none;
-
-            position: absolute;
-            bottom: calc(var(--land-height) - 18px);
-            left: .5em;
-            width: var(--sun-width);
-            height: calc(var(--sun-width) / 2);
-            border-radius: calc(var(--sun-width) / 2) calc(var(--sun-width) / 2) 0 0;
-            background-color: #fd5e53;
-            z-index: 1;
         }
 
         .land {
