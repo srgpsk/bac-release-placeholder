@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=1920, height=1080, initial-scale=1.0">
+          content="width=1920, height=1080, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Franklinstein release Phase B</title>
     <style>
@@ -378,30 +378,34 @@
         .action.rainbow {
             transform: skewX(-5deg) scale(5, .35);
             border-radius: 50%;
-            z-index: -1;
+            z-index: 4;
 
             transition: all .5s;
         }
 
         /** position inside unicorn container */
         .rainbow-first {
-            top: calc(var(--unicorn-height) / 2 + 25px);
-            right: calc(var(--unicorn-width) - 70px);
+            top: calc(var(--unicorn-height) / 2 + 30px);
+            right: calc(var(--unicorn-width) - 60px);
         }
 
         .action.rainbow-first {
             top: unset;
             right: 50%;
-            bottom: -32%;
+            bottom: 3%;
         }
 
         .rainbow-first img {
             animation: rainbow 1.5s ease-in forwards infinite;
         }
 
+        .action.rainbow-first img {
+            animation: none;
+        }
+
         .rainbow-second {
-            top: calc(var(--unicorn-height) * 0.75 - 10px);
-            left: 50%;
+            top: calc(var(--unicorn-height) * 0.75 + 10px);
+            left: 52%;
             transform: rotateY(180deg);
         }
 

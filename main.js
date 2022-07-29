@@ -46,11 +46,18 @@ document.addEventListener('click', e => {
     // unicorn stops shitting
     document.getAnimations().forEach(a => {
         if ('rainbow' !== a.animationName) return;
+
+        console.log(a)
         a.effect.updateTiming({iterations: 1});
         a.finish();
         a.cancel();
     })
-    document.querySelectorAll('.rainbow').forEach(el => el.classList.add('action'));
+    document.querySelectorAll('.rainbow').forEach(el => {
+        el.classList.add('action');
+
+        // remove rainbows from unicorn container
+        animationContainer.firstElementChild.appendChild(el);
+    });
 
     // split the sun
     const sun = document.querySelector('[data-sun-raised]');
