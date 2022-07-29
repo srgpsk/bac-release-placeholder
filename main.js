@@ -24,7 +24,6 @@ const play = curry('play');
 const pause = curry('pause');
 
 registerAnimationListener('igogoStart', () => play('igogo'));
-
 registerAnimationListener('runningAwayToTheSunsetStart', () => play('skok'));
 registerAnimationListener('runningAwayToTheSunsetEnd', () => pause('skok'));
 
