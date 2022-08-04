@@ -239,7 +239,7 @@ p {
     height: var(--sun-landed-height);
     border-radius: calc(var(--sun-width) / 2) calc(var(--sun-width) / 2) 0 0;
     background-color: #fd5e53;
-    animation: sun-landing 1s forwards ease-in, .1s ease-out .7s 2 normal sun-landed;
+    animation: sun-landing .5s forwards ease-in, .1s ease-out .7s 2 normal sun-landed;
 }
 
 @keyframes sun-landing {
@@ -360,6 +360,7 @@ p {
 
     width: calc(var(--rainbow-height) * 100vw / var(--viewport-width));
     height: calc(var(--rainbow-height) * 100vh / var(--viewport-height));
+    transition: all .5s;
 }
 
 .rainbow img {
@@ -370,8 +371,7 @@ p {
     transform: skewX(-5deg) scale(5, .35);
     border-radius: 50%;
     z-index: 4;
-
-    transition: all .5s;
+    transition: transform .1s;
 }
 
 /** position inside unicorn container */
@@ -398,6 +398,7 @@ p {
     top: calc(var(--unicorn-height) * 0.75 + 10px);
     left: 52%;
     transform: rotateY(180deg);
+    /*transition: visibility .5s;*/
 }
 
 .action.rainbow-second {
@@ -448,10 +449,11 @@ p {
 
 .cloud {
     width: 100%;
+    transition: visibility 1s;
 }
 
 .action .cloud {
-    display: none;
+    visibility: hidden;
 }
 
 .paper {
@@ -464,5 +466,5 @@ p {
 
 .action .paper {
     transform: translate(16px, 200px) rotate(2.4turn);
-    transition: transform 3s linear;
+    transition: transform 1s linear 1s;
 }
